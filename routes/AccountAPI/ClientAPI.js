@@ -70,7 +70,7 @@ router.post('/CreateAccount/insertPerson', function(req, res, next) {
   var pass = req.body.password
   var email = req.body.email
   var vid = req.body.VID
-  bcrypt.hash(req.body.password, config.saltRounds, function(err, hash) {
+  bcrypt.hash(req.body.password, config.hashing.saltRounds, function(err, hash) {
     connection.query('INSERT INTO Client (email) VALUES (?); INSERT INTO Client_Password (Client_CID, password) VALUES (LAST_INSERT_ID(),?);', [email, hash] , function (error, results, fields) {if (error) throw error;});    res.redirect('/');
   });
 });

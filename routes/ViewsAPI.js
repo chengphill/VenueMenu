@@ -80,4 +80,15 @@ router.post('/Requests', function (req, res) {
       });
     });
 
+  router.post('/VerifyInfo', function (req, res) {
+      connection.query("SELECT S.stallName, S.verified, C.stallName, C.firstName, C.lastName, C.present FROM Stall S, Client C WHERE C.CID = S.Client_CID", function(err, result)
+      {
+          if(err) throw err;
+          else{
+              res.json(result);   //sends result as a json object
+          }
+      });
+    });
+
+
 module.exports = router;

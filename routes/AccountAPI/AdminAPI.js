@@ -45,7 +45,9 @@ router.post('/CreateAccount', function(req, res, next) {
   var pass = req.body.password
   var email = req.body.email
   var VID = req.body.VID
-  if(!req.body.email || !req.body.password)
+  var fname= req.body.fname
+  var lname= req.body.lname
+  if(!req.body.email || !req.body.password || !req.body.VID || !req.body.fname || !req.body.lname)
     res.send("CreateAccount Missing Parameters");
   else
     res.redirect(307, '/API/Accounts/Admin/CreateAccount/emailCheck');
@@ -55,6 +57,8 @@ router.post('/CreateAccount/emailCheck', function(req, res, next) {
   var pass = req.body.password
   var email = req.body.email
   var VID = req.body.VID
+  var fname= req.body.fname
+  var lname= req.body.lname
   connection.query('SELECT count(1) AS emailCheck FROM Admin WHERE email = ?', [req.body.email] , function (error, results, fields) {
       if (error) throw error;
       if (results[0].emailCheck != 0){
@@ -70,9 +74,11 @@ router.post('/CreateAccount/insertPerson', function(req, res, next) {
   var pass = req.body.password
   var email = req.body.email
   var VID = req.body.VID
+  var fname= req.body.fname
+  var lname= req.body.lname
   bcrypt.hash(req.body.password, config.hashing.saltRounds, function(err, hash) {
 	if(err) throw error;
-    connection.query('INSERT INTO Admin (Venue_VID, email) VALUES (?,?); INSERT INTO Admin_Password (Admin_AID, password) VALUES (LAST_INSERT_ID(),?);', [VID, email, hash] , function (error, results, fields) {if (error) throw error;});
+    connection.query('INSERT INTO Admin (Venue_VID, email, firstName, lastName) VALUES (?,?,?,?); INSERT INTO Admin_Password (Admin_AID, password) VALUES (LAST_INSERT_ID(),?);', [VID, email, fname, lname, hash] , function (error, results, fields) {if (error) throw error;});
     res.redirect('/');
   });
 });

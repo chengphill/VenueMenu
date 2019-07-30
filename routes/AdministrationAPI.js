@@ -68,31 +68,37 @@ router.post("/resetAttendance", function(req, res) {
 
 //set verify to 1 for stall verification
 //using the stallname
-  router.post("/verify", function(req, res) {
-
-      var isVerified = "UPDATE Stall, `Client`, Venue SET Stall.Verified = 1 WHERE `Client`.stallName = ? AND `Client`.CID = Stall.Client_CID AND Venue_VID = ?;"
-      var clientPresent = "SELECT present FROM Client WHERE stallName = ?";
+  
+router.post("/Verify", function(req, res) {
+	console.log(req.body.CID);
+      var isVerified = "UPDATE Stall, `Client`, Venue SET Stall.Verified = 1 WHERE `Client`.CID = ? AND `Client`.CID = Stall.Client_CID AND Venue_VID = ?;"
+      var clientPresent = "SELECT present FROM Client WHERE CID = ?";
       var isPresent = 0; //client not checked in default value 0
 
-      connection.query(clientPresent, [req.body.stallName], function (err, result2) {
+      connection.query(clientPresent, [req.body.CID], function (err, result2) {
           if (err) throw err;
           else{
           //get present value of client: 0 or 1. 1 is present
             isPresent = parseInt(result2[0].present,10);
             if (isPresent == 1){
                 //is verified so update verify to 1 in stall
-                connection.query(isVerfied, [req.body.stallName, req.body.VID], function (err, result) {
+                //connection.query(isVerified, [req.body.CID, req.body.VID], function (err, result) {
+                  connection.query(isVerified, [req.body.CID, 1], function (err, result) {
                     if (err) throw err;
-                    res.send(0);
+                    res.send("1");
                     })
             }
             else{
                 //return an error to user client not checked in
-                res.send(1);
+                res.send("0");
           }
         }
       });
   });
+
+router.post("/ReqError", function(req, res) {
+  res.send(req.body);
+});
 
   router.post("/unVerifyStall", function(req, res) {
 

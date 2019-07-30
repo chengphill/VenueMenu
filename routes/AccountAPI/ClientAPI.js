@@ -45,7 +45,9 @@ router.post('/CreateAccount', function(req, res, next) {
   var pass = req.body.password
   var email = req.body.email
   var vid = req.body.VID
-  if(!req.body.email || !req.body.password)
+  var fname= req.body.fname
+  var lname= req.body.lname
+  if(!req.body.email || !req.body.password || !req.body.fname || !req.body.lname)
     res.send("CreateAccount Missing Parameters");
   else
     res.redirect(307, '/API/Accounts/Client/CreateAccount/emailCheck');
@@ -55,6 +57,8 @@ router.post('/CreateAccount/emailCheck', function(req, res, next) {
   var pass = req.body.password
   var email = req.body.email
   var vid = req.body.VID
+  var fname= req.body.fname
+  var lname= req.body.lname
   connection.query('SELECT count(1) AS emailCheck FROM Client WHERE email = ?', [req.body.email] , function (error, results, fields) {
       if (error) throw error;
       if (results[0].emailCheck != 0){
@@ -70,8 +74,11 @@ router.post('/CreateAccount/insertPerson', function(req, res, next) {
   var pass = req.body.password
   var email = req.body.email
   var vid = req.body.VID
+  var fname= req.body.fname
+  var lname= req.body.lname
   bcrypt.hash(req.body.password, config.hashing.saltRounds, function(err, hash) {
-    connection.query('INSERT INTO Client (email) VALUES (?); INSERT INTO Client_Password (Client_CID, password) VALUES (LAST_INSERT_ID(),?);', [email, hash] , function (error, results, fields) {if (error) throw error;});    res.redirect('/');
+    console.log(hash);
+    connection.query('INSERT INTO Client (email, firstName, lastName) VALUES (?,?,?); INSERT INTO Client_Password (Client_CID, password) VALUES (LAST_INSERT_ID(),?);', [email, fname, lname, hash] , function (error, results, fields) {if (error) throw error;});    res.redirect('/');
   });
 });
 
@@ -88,47 +95,16 @@ router.post('/Login', function(req, res, next) {
         connection.query('SELECT Client_Password.password, Client.CID FROM Client_Password, Client WHERE Client.email = ? AND Client.CID = Client_Password.Client_CID', [email] , function (error, results, fields) {
           if (error) throw error;
           let cid = results[0].CID;
-          console.log(cid);
           bcrypt.compare(req.body.password, results[0].password, (err, compare) => {
-            if(!compare) res.send("Invalid password, please try again");
-            console.log(req.session);
-            req.session.name     = cid;
-            req.session.isAdmin = false;
-            res.send("Password Accepted");
+            if(!compare) res.json({"err":"2", "AID": "0"});
+            else res.json({"err": "0", "CID" : cid});
           });
         });
     }
     else{
-      res.send("This account does not exist, please create an account!");
+      res.json({"err":"1", "CID": "0"});
     }
   });
 });
-
-// router.post('/CreateAccount/passCheck', function(req, res, next) {
-//   var pass = req.body.password
-//   var email = req.body.email
-//   connection.query('SELECT pass AS passCheck FROM person WHERE email = ?', [req.body.email] , function (error, results, fields) {
-//     if (error) throw error;
-//     if (results[0].passCheck == 'null')
-//       //res.redirect(307, '/API/AdminAccounts/updatePass');
-//       res.redirect(307, '/API/Accounts/Client/CreateAccount/exists');
-//     else{
-//       res.redirect(307, '/API/Accounts/Client/CreateAccount/exists');
-//     }
-//   });
-// });
-//
-// router.post('/updatePass', function(req, res, next) {
-//   var pass = req.body.password
-//   var email = req.body.email
-//     sql.query('UPDATE person SET pass = ? WHERE email = ?', [pass, email] , function (error, results, fields) {if (error) throw error;});
-//     transporter.sendMail({from: '4710team8@gmail.com',
-//       to: email,
-//       subject: 'Survey Time: Please verify your accounts email adderess',
-//       text: 'Please follow this link to verify your accounts email adderess: http://localhost:3000/createAccount/verify?Email='+email+'&SuperSecretWord=WOLVERINES'}, function(error, info){
-//       if (error) {console.log(error);} else {console.log('Email sent: ' + info.response);}
-//     });
-//     res.redirect('/');
-// });
 
 module.exports = router;

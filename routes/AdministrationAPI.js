@@ -102,7 +102,7 @@ router.post("/ReqError", function(req, res) {
 
   router.post("/unVerifyStall", function(req, res) {
 
-      var unVerify = "UPDATE Stall SET verify = '0' WHERE SID = ?";
+      var unVerify = "UPDATE Stall SET verified = '0' WHERE SID = ?";
 
       connection.query(unVerify, [req.body.SID], function (err, result) {
       if (err) throw err;
@@ -113,7 +113,7 @@ router.post("/ReqError", function(req, res) {
 
   router.post("/resetVerification", function(req, res) {
 
-      var resetVerification = "UPDATE Stall SET verify = 0";
+      var resetVerification = "UPDATE Stall SET verified = 0";
 
       connection.query(resetVerification, function (err, result) {
       if (err) throw err;

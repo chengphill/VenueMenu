@@ -89,7 +89,7 @@ router.post('/CreateAccount/Exists', function(req, res, next) {
 
 router.post('/Login', function(req, res, next) {
     var email = req.body.email;
-    var pass = req.body.Password;
+    var pass = req.body.password;
     connection.query('SELECT count(1) AS emailCheck FROM Admin WHERE email = ?', [email] , function (error, results, fields) {
       if (error) throw error;
       if (results[0].emailCheck != 0){
@@ -97,44 +97,15 @@ router.post('/Login', function(req, res, next) {
           if (error) throw error;
           let aid = results[0].AID;
           bcrypt.compare(req.body.password, results[0].password, (err, compare) => {
-            if(!compare) res.send("Invalid password, please try again");
-            req.session.name     = aid;
-            req.session.isAdmin = false;
-            res.send("Password Accepted");
+            if(!compare) res.json({"err":"2", "AID": "0"});
+	    else res.json({"err": "0", "AID" : aid});
           });
         });
     }
     else{
-      res.send("This account does not exist, please create an account!");
+      res.json({"err":"1", "AID": "0"});
     }
   });
 });
-
-// router.post('/CreateAccount/passCheck', function(req, res, next) {
-//   var pass = req.body.password
-//   var email = req.body.email
-//   connection.query('SELECT pass AS passCheck FROM person WHERE email = ?', [req.body.email] , function (error, results, fields) {
-//     if (error) throw error;
-//     if (results[0].passCheck == 'null')
-//       //res.redirect(307, '/API/Accounts/Admin/updatePass');
-//       res.redirect(307, '/API/Accounts/Admin/CreateAccount/exists');
-//     else{
-//       res.redirect(307, '/API/Accounts/Admin/CreateAccount/exists');
-//     }
-//   });
-// });
-//
-// router.post('/updatePass', function(req, res, next) {
-//   var pass = req.body.password
-//   var email = req.body.email
-//     sql.query('UPDATE person SET pass = ? WHERE email = ?', [pass, email] , function (error, results, fields) {if (error) throw error;});
-//     transporter.sendMail({from: '4710team8@gmail.com',
-//       to: email,
-//       subject: 'Survey Time: Please verify your accounts email adderess',
-//       text: 'Please follow this link to verify your accounts email adderess: http://localhost:3000/createAccount/verify?Email='+email+'&SuperSecretWord=WOLVERINES'}, function(error, info){
-//       if (error) {console.log(error);} else {console.log('Email sent: ' + info.response);}
-//     });
-//     res.redirect('/');
-// });
 
 module.exports = router;

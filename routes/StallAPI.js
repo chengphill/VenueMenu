@@ -35,43 +35,67 @@ app.use(bodyParser.urlencoded({extended : true})); // Supports encoded bodies
 // ** ROUTE **
 // -----------------------------------------------------------------------------
 
-router.post("/insert", function(req, res) {
-  // get data from forms and add to the table called user..
+router.post("/insert", insert);
+router.post("/delete", deleteStall);
+router.post("/edit", edit); 
 
+function insertCont(req, res, next) {
   var sql = `INSERT INTO Stall (stallName, Venue_VID ) VALUES (?, ?)`;
-
+  var updateVenue = "UPDATE Venue SET Stalls = Stalls + 1 WHERE VID = ?";
   connection.query(sql, [req.body.stallName, req.body.VID], function(err, data) {
     if(err) throw err;
     else {
-      res.end();
+      connection.query(updateVenue, [req.body.VID], function(err, data) {
+      res.json({"err":"0"});
+      });
     }
   });
-});
+}
 
-router.post("/edit", function(req, res) {
+function insert(req, res, next) {
+  // get data from forms and add to the table called user..
+  if (!req.body.stallName || !req.body.VID) res.json({"err": "1"})
+  else insertCont(req,res,next);
+}
+
+function editCont(req, res, next) {
   // get data from forms and add to the table called user..
 
   var sql = `UPDATE Stall SET stallName = ? WHERE SID = ?`;
-
+  
   connection.query(sql, [req.body.stallName, req.body.SID], function(err, data) {
     if(err) throw err;
     else {
+      console.log
       res.end();
     }
   });
-});
+}
 
-router.post("/delete", function(req, res) {
+function edit(req, res, next) {
   // get data from forms and add to the table called user..
+  if (!req.body.stallName || !req.body.SID) res.json({"err": "1"})
+  else editCont(req,res,next);
+}
 
+function deleteCont(req, res, next) {
   var sql = `DELETE FROM Stall WHERE SID = ?`;
-
+  var updateVenue = "UPDATE Venue SET Stalls = Stalls - 1 WHERE VID = ?";
   connection.query(sql, [req.body.SID], function(err, data) {
     if(err) throw err;
     else {
-      res.end();
+      connection.query(updateVenue, [req.body.VID], function(err, data) {
+      res.json({"err":"0"});
+      });
     }
   });
-});
+}
+  
+function deleteStall(req, res, next) {
+  // get data from forms and add to the table called user..
+  if (!req.body.stallName || !req.body.VID) res.json({"err": "1"})
+  else deleteCont(req,res,next);
+}
+
 
 module.exports = router;

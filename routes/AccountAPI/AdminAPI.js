@@ -49,7 +49,7 @@ router.post('/CreateAccount/Exists', exists);
 
 function exists(req, res, next) {
     console.log("User Account Exists");
-    res.send("User Account Exists");
+    res.json({"err":"1"});
 }
 
 function insertPerson(req, res, next) {
@@ -61,7 +61,7 @@ function insertPerson(req, res, next) {
   bcrypt.hash(req.body.password, config.hashing.saltRounds, function(err, hash) {
 	if(err) throw error;
   connection.query('INSERT INTO Admin (Venue_VID, email, firstName, lastName) VALUES (?,?,?,?); INSERT INTO Admin_Password (Admin_AID, password) VALUES (LAST_INSERT_ID(),?);', [VID, email, fname, lname, hash] , function (error, results, fields) {if (error) throw error;});
-  console.log("Person Successfully Inserted");
+  res.json({"err":"0"});
   res.end();
   });
 }
@@ -91,7 +91,7 @@ function createAccount(req, res, next) {
   var lname= req.body.lname
   if(!req.body.email || !req.body.password || !req.body.VID || !req.body.fname || !req.body.lname){
     console.log("CreateAccount Missing Parameters")
-    res.send("CreateAccount Missing Parameters");
+    res.json({"err":"2"});
   }
   else
     emailCheck(req, res, next);

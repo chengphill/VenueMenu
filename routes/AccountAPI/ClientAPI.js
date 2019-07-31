@@ -48,7 +48,7 @@ router.post('/CreateAccount/Exists', exists);
 
 function exists(req, res, next) {
     console.log("User Account Exists");
-    res.send("User Account Exists");
+    res.json({"err":"1"});
 }
 
 function insertPerson(req, res, next) {
@@ -61,7 +61,7 @@ function insertPerson(req, res, next) {
 	if(err) throw error;
     connection.query('INSERT INTO Client (email, firstName, lastName) VALUES (?,?,?); INSERT INTO Client_Password (Client_CID, password) VALUES (LAST_INSERT_ID(),?);', [email, fname, lname, hash] , function (error, results, fields) {if (error) throw error;});
     console.log("Person Successfully Inserted");
-    res.end();
+    res.json({"err":"0"});
   });
 }
 
@@ -89,7 +89,7 @@ function createAccount(req, res, next) {
   var lname= req.body.lname
   if(!req.body.email || !req.body.password || !req.body.fname || !req.body.lname){
     console.log("CreateAccount Missing Parameters");
-    res.send("CreateAccount Missing Parameters");
+    res.json({"err":"2"});
   }
   else
     emailCheck(req, res, next);

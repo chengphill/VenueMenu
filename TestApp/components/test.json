@@ -1,0 +1,86 @@
+[
+  {
+    "CID": 1,
+    "stallName": "101",
+    "email": "Test@Test.com",
+    "firstName": "First",
+    "lastName": "Last",
+    "accountDue": 0,
+    "securityQuestion": "TestQuestion",
+    "securityAnswer": "TestAnswer",
+    "present": 0,
+    "verified": 0
+  },
+  {
+    "CID": 2,
+    "stallName": "102",
+    "email": "test@test.test",
+    "firstName": "Firest2",
+    "lastName": "Lastest2",
+    "accountDue": 0,
+    "securityQuestion": "",
+    "securityAnswer": "",
+    "present": 1,
+    "verified": 1
+  },
+  {
+    "CID": 3,
+    "stallName": "103",
+    "email": "Test@Test.com",
+    "firstName": "First",
+    "lastName": "Last",
+    "accountDue": 0,
+    "securityQuestion": "TestQuestion",
+    "securityAnswer": "TestAnswer",
+    "present": 0,
+    "verified": 0
+  },
+  {
+    "CID": 4,
+    "stallName": "104",
+    "email": "Test@Test.com",
+    "firstName": "First",
+    "lastName": "Last",
+    "accountDue": 0,
+    "securityQuestion": "TestQuestion",
+    "securityAnswer": "TestAnswer",
+    "present": 0,
+    "verified": 0
+  },
+  {
+    "CID": 5,
+    "stallName": "105",
+    "email": "Test@Test.com",
+    "firstName": "First",
+    "lastName": "Last",
+    "accountDue": 0,
+    "securityQuestion": "TestQuestion",
+    "securityAnswer": "TestAnswer",
+    "present": 0,
+    "verified": 0
+  },
+  {
+    "CID": 6,
+    "stallName": "106",
+    "email": "Test@Test.com",
+    "firstName": "First",
+    "lastName": "Last",
+    "accountDue": 0,
+    "securityQuestion": "TestQuestion",
+    "securityAnswer": "TestAnswer",
+    "present": 0,
+    "verified": 0
+  },
+  {
+    "CID": 7,
+    "stallName": "107",
+    "email": "Test@Test.com",
+    "firstName": "First",
+    "lastName": "Last",
+    "accountDue": 0,
+    "securityQuestion": "TestQuestion",
+    "securityAnswer": "TestAnswer",
+    "present": 1,
+    "verified": 1
+  }
+]

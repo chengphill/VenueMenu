@@ -1,0 +1,43 @@
+.container{
+    width: 78%;
+    margin: auto;
+    background-color: white;
+}
+
+.block{
+	float:left;
+	width:33.3%;
+	border:1px solid none;
+	padding:10px;
+    box-sizing:border-box;
+    padding-top:10px;
+    font-size: 60px;
+
+    text-align: center;
+    height: 350px;
+
+    /* background-color: #f7f7f7; */
+}
+
+.content{
+    text-align: left;
+    font-size: 20px;
+}
+
+.block .content{
+    position: relative;
+
+    background-color: '';   
+
+}
+
+.clr{
+	clear:both;
+}
+
+.space{
+    height: 50px;
+}
+
+
+  

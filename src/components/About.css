@@ -1,0 +1,32 @@
+.about-container{
+    text-align: center;
+    padding: 1%;
+    width: 80%;
+    margin:auto
+}
+
+.text-container{
+    background-color: white;
+    margin-left: 14%;
+    margin-right: 14%;
+}
+
+.box-one{
+    background: white;
+    float: right;
+    padding: 15px;
+    box-sizing: border-box;
+    width: 50%;
+    height: 100%
+}
+.box-two{
+    float: left;
+    width:50%;
+    padding: 15px;
+    background-color: white;
+    height:100%;
+}
+
+.clr{
+	clear:both;
+}

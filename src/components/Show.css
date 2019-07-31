@@ -1,0 +1,36 @@
+
+
+.slide-container {
+    width: 1500px;
+    margin: auto; 
+    
+  }
+  
+  /* h3 {
+    text-align: center; } */
+  
+  .each-slide > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    height: 500px;
+    
+  
+  }
+  
+  .bg{
+    background-color: none;
+    
+  }
+
+  .nav {
+    display:none;    
+  }
+  /* .each-slide span {
+    padding: 0px;
+    font-size: 20px;
+    background: #efefef;
+    text-align: center;
+  }
+   */

@@ -1,0 +1,18 @@
+.shop-container{
+    display:flex;
+    justify-content: center;
+    background-color: white;
+}
+
+.categories{
+    background-color: white;
+    width: 33%;
+    padding:10px;
+    box-sizing:border-box;
+    text-align: center;
+    
+}
+
+.categories li{
+    list-style-type: none;
+}

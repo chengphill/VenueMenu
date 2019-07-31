@@ -1,0 +1,55 @@
+.tabContainer {
+    display: flex;
+    justify-content: center;
+    font-size: 150%;
+}
+
+.header1, .header2{
+    font-size:20px;
+width:50%;
+background-color:#f2f2f2;
+text-align: center;  
+cursor:pointer;
+padding: 10px;
+background-color: #eee;
+color: #00f;
+text-decoration: none;
+display: inline-block;
+position: relative;
+}
+
+.header2{
+    font-size:20px;
+    width:50%;
+    background-color:#f2f2f2;
+    text-align: center;  
+
+}
+
+.headeractive {
+    color: #00f;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+  }
+  
+  headeractive:after {
+    width: 0;
+    background: #00f;
+    height: 3px;
+    transition: all .5s ease-in-out;
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    right: 0;
+  }
+  
+  headeractive.underline:after {
+    width: 100%;
+    left: 0;
+  }
+  
+  headeractive:hover:after {
+    width: 100%;
+    left: 0;
+  }

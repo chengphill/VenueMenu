@@ -59,7 +59,7 @@ router.post('/Clients', function (req, res) {
   });
 
 router.post('/Client', function (req, res) {
-    connection.query("SELECT S.stallName as venueStall, S.verified, S.SID, C.CID, C.stallName as storeName, C.firstName, C.lastName, C.present, T.tagName FROM Stall S, `Client` C, Client_has_Tag CT, Tag T WHERE C.CID = S.Client_CID AND CT.Client_CID = C.CID AND CT.Tag_TID = T.TID AND C.CID = ?;", [req.body.CID] ,function(err, result)
+    connection.query("SELECT S.stallName as venueStall, S.verified, S.SID, C.CID, C.stallName as storeName, C.firstName, C.lastName, C.present FROM Stall S, Client C WHERE C.CID = S.Client_CID AND C.CID = ?;", [req.body.CID] ,function(err, result)
     {
         if(err) throw err;
         else{
@@ -68,6 +68,15 @@ router.post('/Client', function (req, res) {
     });
   });
 
+router.post('/Tags', function (req, res) {
+    connection.query("SELECT T.tagName FROM `Client` C, Client_has_Tag CT, Tag T WHERE CT.Client_CID = C.CID AND CT.Tag_TID = T.TID AND C.CID = ?;", [req.body.CID] ,function(err, result)
+    {
+        if(err) throw err;
+        else{
+            res.json(result);   //sends result as a json object
+        }
+    });
+  });
 
 router.post('/Requests', function (req, res) {
     connection.query("SELECT * FROM Request WHERE status != 2", function(err, result)

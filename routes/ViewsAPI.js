@@ -118,7 +118,7 @@ router.post('/Requests', function (req, res) {
     });
 
 router.post('/Tags', function (req, res) {
-  connection.query("SELECT tagName FROM Tag T, Stall S, Client C WHERE S.Venue_VID = T.Venue_VID AND S.Client_CID = C.CID AND C.CID = ?;", [req.body.CID] ,function(err, result3)
+  connection.query("SELECT tagName FROM Tag T, Stall S, Client C WHERE S.Venue_VID = T.Venue_VID AND S.Client_CID = C.CID AND C.CID = ?;", [req.body.CID] ,function(err, result)
   {
       if(err) throw err;
       else{
